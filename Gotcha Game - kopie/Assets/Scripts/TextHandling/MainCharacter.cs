@@ -30,10 +30,7 @@ public class MainCharacter : MonoBehaviour
             'and after that I need to find a place where the signal is strong enough'
         ],
         'Progress' : [
-            'Alright! One more thing I need to do'
-        ],
-        'Achievement' : [
-            'It worked!'
+            'Alright! Now for the radio itself...'
         ]
     }";
 

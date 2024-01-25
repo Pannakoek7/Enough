@@ -13,13 +13,22 @@ public class StartKey : ParentInteraction
         //lambda to pass parameter
         //Chapter first parameter, who says it second parameter
         StartKeyEvent += () => {tHandler.ProgressText(protChapter.Start, protaginist);};
+        StartKeyEvent += () => 
+        {
+            gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+            gameObject.transform.parent.transform.rotation = Quaternion.Euler(0,0,270);
+            bCol.myState = BoolCollection.State.Sail;
+        };
     }
 
     protected override void OnMouseDown()
     {
         base.OnMouseDown();
 
-        StartKeyEvent?.Invoke();
-        this.enabled = false;
+        if(bCol.myState == BoolCollection.State.Start)
+        {
+            StartKeyEvent?.Invoke();
+            StartKeyEvent = null;
+        }
     }
 }

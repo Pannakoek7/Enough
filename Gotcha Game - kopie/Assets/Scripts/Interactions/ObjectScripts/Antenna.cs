@@ -34,18 +34,16 @@ public class Antenna : Slide
 
         if(gameObject.transform.parent.transform.localScale.y == maxLength)
         {
-            if(bCol.myState == BoolCollection.State.Receive)
+            if(bCol.myState == BoolCollection.State.Magneticwaves)
             {
-                tHandler.ProgressText(radioChapter.Incoherent, radio);
-                tHandler.ProgressText(protChapter.Progress, protaginist);
+                tHandler.ProgressText(radioChapter.Appointment, radio, 0, protaginist);
                 bCol.myState = BoolCollection.State.RadioWorking;
             } 
             else if(bCol.myState == BoolCollection.State.BrokenRadio) 
             {
-                //tHandler.ProgressText
-                tHandler.ProgressText(radioChapter.Appointment, radio);
-                //tHandler.ProgressText
-                bCol.myState = BoolCollection.State.RadioWorking;
+                
+                tHandler.ProgressText(radioChapter.Static, radio, 0, protaginist);
+                bCol.myState = BoolCollection.State.Receive;
             }
 
         }

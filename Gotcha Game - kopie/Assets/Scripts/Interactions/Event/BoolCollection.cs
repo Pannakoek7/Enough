@@ -14,5 +14,5 @@ public class BoolCollection : MonoBehaviour
         RadioWorking
     }
 
-    internal State myState = State.BrokenRadio;
+    internal State myState = State.Start;
 }

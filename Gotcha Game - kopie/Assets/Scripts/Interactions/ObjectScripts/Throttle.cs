@@ -11,17 +11,16 @@ public class Throttle : Slide
         base.Start();
      
         ThrottleEvent += () => {tHandler.ProgressText(protChapter.Throttle, protaginist);};
-        //ThrottleEvent += () => {bCol.ToOpposite(ref bCol.hasStarted);};
         ThrottleEvent += () => {StartCoroutine(Waiting());};
+        ThrottleEvent += () => {bCol.myState = BoolCollection.State.BrokenRadio;};
     }
 
     IEnumerator Waiting()
     {
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(12);
         
         tHandler.ProgressText(protChapter.Silent, protaginist);
         objHandler.ChangeTask(quest.EnableRadio);
-        //bCol.ToOpposite(ref bCol.radioActive);
     }
 
     protected override void Update()
@@ -30,8 +29,12 @@ public class Throttle : Slide
 
         if(gameObject.transform.position.y == maxLength)
         {
-            ThrottleEvent?.Invoke();
-            ThrottleEvent = null;
+            if(bCol.myState == BoolCollection.State.Sail)
+            {
+                ThrottleEvent?.Invoke();
+                ThrottleEvent = null;
+            }
+            
         }
     }
 

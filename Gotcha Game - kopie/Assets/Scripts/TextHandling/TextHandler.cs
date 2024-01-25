@@ -3,46 +3,65 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System;
+using UnityEngine.UIElements;
 
 public class TextHandler : MonoBehaviour
 {
-    public void ProgressText(string[] sa, TMP_Text tt, int i = 0)
+    public void ProgressText(string[] sa, TMP_Text tt, int i = 0, TMP_Text ttwo = null)
     {      
-        StartCoroutine(Scrolling(sa, tt, i));
+        StartCoroutine(Scrolling(sa, tt, i, ttwo));
     }
 
-    private IEnumerator Scrolling(string[] s, TMP_Text tt, int i)
+    private IEnumerator Scrolling(string[] sa, TMP_Text tt, int i, TMP_Text ttwo = null)
     {
-        tt.text = s[i];
+
+        DynamicConversation(sa, ref tt, i, ref ttwo);
+        
+        tt.text = sa[i];
         yield return new WaitForSeconds(3);
         tt.text = " ";
         yield return new WaitForSeconds(.5f);
         i++;
-        if(i < s.Length)
+        if(i < sa.Length)
         {
-            print(i);
-            StartCoroutine(Scrolling(s, tt, i));
+            StartCoroutine(Scrolling(sa, tt, i, ttwo));
+        } else {
+            tt.text = "";
+            if(ttwo != null)
+            {
+                ttwo.text = "";
+            }
         }
     }
 
-    void DynamicConversation(string[] sa, TMP_Text tt, int i)
+    private string whoIsTalking;
+
+    void DynamicConversation(string[] sa, ref TMP_Text tt, int i, ref TMP_Text ttwo)
     {
-        var meta = sa[i].Substring(sa[i].Length-3);
-        var finalString = sa[i].Remove(sa[i].Length - 3);
-        
-        
-        if(meta == "{r}")
+        //var meta = sa[i].Substring(sa[i].Length-3);
+        //var finalString = sa[i].Remove(sa[i].Length - 3);
+
+        var meta = sa[i].Split("#");
+        var finalString = meta[0];
+
+        if(meta.Length > 1)
         {
-            //tt = ;
-        } else if (meta == "{p}")
-        {
-            //tt = tt;
+            if(whoIsTalking != meta[1] && i != 0)
+            {
+                whoIsTalking = meta[1];
+                print(meta[1]);
+                var newTMP = ttwo;
+                var oldTMP = tt;
+                tt = newTMP;
+                ttwo = oldTMP;
+            } else if(i==0)
+            {
+                whoIsTalking = meta[1];
+            }        
         }
 
         sa[i] = finalString;
-        StartCoroutine(Scrolling(sa, tt, i));
+        
     }
 
-    TMP_Text test1;
-    TMP_Text test2;
 }

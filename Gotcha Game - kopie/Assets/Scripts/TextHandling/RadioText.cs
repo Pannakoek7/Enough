@@ -11,21 +11,22 @@ public class RadioText : MonoBehaviour
     [Serializable]
     public class RadioMessages
     {
-        public string[] Appointment, Incoherent;
+        public string[] Appointment, Static;
     }
 
     string json = @"{
         'Appointment' : [
-            'Once again I\'m sorry I couldn\'t go to your birthday{r}',
-            'Maybe we can meet up next week somewhere?'
+            'He...bzzzzrt...Hey#r',
+            'I fixed it it like a champ#p',
+            'Once again I\'m sorry I couldn\'t go to your birthday#r',
+            'Maybe we can meet up somewhere next week?#r',
+            'Wait what, why is this on the radio#p',
+            'I do not want to think about this right now#p',
+            'Do I?#p'
         ],
         'Static' : [
-            'Krrrghhh.....tsrrr....hssss',
-            '....gzzgzht....',
-            'pfssst....bzzztzt'
-        ],
-        'Incoherent' : [
-            'He...bzzzzrt...Hey'
+            'Krrrghhh.....tsrrr....hssss#r',
+            'Alright! Now I only need a better signal#p'
         ]
     }";
 
