@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.UI;
 
 public class Compass : Drag
 {
@@ -45,15 +46,25 @@ public class Compass : Drag
                 {
                     var c = gameObject.transform.parent.gameObject.GetComponent<SpriteRenderer>();
                     c.color = new Color32(255, 199, 81, 255);
-                    if(bCol.myState == BoolCollection.State.BrokenRadio)
+                    if(gameState.myState == StateHandler.State.BrokenRadio)
                     {
-                        bCol.myState = BoolCollection.State.Magneticwaves;
+                        gameState.myState = StateHandler.State.Magneticwaves;
                         tHandler.ProgressText(protChapter.Progress, protaginist);
                     } 
-                    else if(bCol.myState == BoolCollection.State.Receive)
+                    else if(gameState.myState == StateHandler.State.Receive)
                     {
-                        bCol.myState = BoolCollection.State.RadioWorking;
-                        tHandler.ProgressText(radioChapter.Appointment, radio, 0, protaginist);
+                        gameState.myState = StateHandler.State.RadioWorking;
+                        tHandler.ProgressText(radioChapter.Appointment, radio, true, 0, protaginist);
+                        dialogue.ChangeTask("");
+
+                        tHandler.afterDialogue += () => {dialogue.EnableChoice(choice.ChoiceOne);};
+                        //button event dings
+                        dialogue.RemoveAddFunctions(0, tHandler, protChapter.Think, protaginist);
+                        dialogue.RemoveAddFunctions(1, tHandler, protChapter.Void, protaginist);
+                        for(int i = 0; i < dialogue.buttons.Length; i++)
+                        {
+                            dialogue.buttons[i].GetComponent<Button>().onClick.AddListener(() => {tHandler.afterDialogue += () => {dialogue.ChangeTask(quest.ChangeChannel);};});
+                        }
                     }
                 }
             }

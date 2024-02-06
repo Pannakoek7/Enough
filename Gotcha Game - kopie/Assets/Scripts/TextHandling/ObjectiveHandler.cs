@@ -9,62 +9,30 @@ using Newtonsoft.Json;
 using System;
 
 
-public class ObjectiveHandler : MonoBehaviour
+public partial class Dialogue
 {
     
     public TMP_Text objective;
-    
-    /*private List<string> tasks = new List<string>();
-    private int taskNumber;
-
-    void Start()
-    {
-        string readFromFilePath = Application.streamingAssetsPath + "/Objective" + ".txt";
-        tasks = File.ReadAllLines(readFromFilePath).ToList();
-
-        ChangeTask();
-    }
-
-    public void ChangeTask()
-    {
-        if(taskNumber < tasks.Count)
-        {
-            objective.text = tasks[taskNumber];
-        }
-        
-        taskNumber++;
-
-        //Might need a parameter if task description depends on player action.
-        //Maybe a optional parameter 
-        
-        //Might just turn this into JSON as well tbh, I believe in JSON surpremacy;
-    }*/
-
 
     [Serializable]
     public class Objectives
     {
-        public string TurnKey, PushThrottle, EnableRadio;
+        public string TurnKey, PushThrottle, EnableRadio, ChangeChannel, SeaShanty, Treasure, Calm, Help;
     }
 
-    string json = @"{
+    string obj = @"{
         'TurnKey' : 'Start the ship',
         'PushThrottle' : 'Push the throttle all the way up',
-        'EnableRadio' : 'Turn on the radio'
+        'EnableRadio' : 'Turn on the radio',
+        'ChangeChannel' : 'Change radio channel',
+        'SeaShanty' : 'There is something odd about this sea shanty',
+        'Treasure' : 'Treasure is waiting',
+        'Calm' : 'Enjoy the silence',
+        'Help' : 'Help mystical creatures'
         
     }";
 
     public Objectives myObj; 
-
-    void Awake()
-    {
-        myObj = JsonConvert.DeserializeObject<Objectives>(json);
-    }
-
-    void Start()
-    {
-        ChangeTask(myObj.TurnKey);
-    }
 
     public void ChangeTask(string quest)
     {

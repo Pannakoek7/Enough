@@ -10,17 +10,27 @@ public class Throttle : Slide
     {
         base.Start();
      
-        ThrottleEvent += () => {tHandler.ProgressText(protChapter.Throttle, protaginist);};
-        ThrottleEvent += () => {StartCoroutine(Waiting());};
-        ThrottleEvent += () => {bCol.myState = BoolCollection.State.BrokenRadio;};
+        ThrottleEvent += () => {
+            tHandler.ProgressText(protChapter.Throttle, protaginist);
+            tHandler.afterDialogue += () => {dialogue.ChangeTask(quest.Calm);};
+            StartCoroutine(Waiting());
+            gameState.myState = StateHandler.State.BrokenRadio;
+        };
     }
 
     IEnumerator Waiting()
     {
         yield return new WaitForSeconds(12);
+        if(protaginist.text == "")
+        {
+            tHandler.ProgressText(protChapter.Silent, protaginist);
+            tHandler.afterDialogue += () => {dialogue.ChangeTask(quest.EnableRadio);};
+        } 
+        else
+        {
+            StartCoroutine(Waiting());
+        }
         
-        tHandler.ProgressText(protChapter.Silent, protaginist);
-        objHandler.ChangeTask(quest.EnableRadio);
     }
 
     protected override void Update()
@@ -29,12 +39,11 @@ public class Throttle : Slide
 
         if(gameObject.transform.position.y == maxLength)
         {
-            if(bCol.myState == BoolCollection.State.Sail)
+            if(gameState.myState == StateHandler.State.Sail)
             {
                 ThrottleEvent?.Invoke();
                 ThrottleEvent = null;
             }
-            
         }
     }
 

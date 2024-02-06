@@ -25,6 +25,8 @@ public class Drawer : MonoBehaviour
         }
 
         bool openOrClosed = (mySprite.sprite == openDrawer) ? mySprite.sprite = closedDrawer : mySprite.sprite = openDrawer;
+
+        mySprite.sortingOrder = (mySprite.sortingOrder == 2) ? 5 : 2;        
     }
 }
 

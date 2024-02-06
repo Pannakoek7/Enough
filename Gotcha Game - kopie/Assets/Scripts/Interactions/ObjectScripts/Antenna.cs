@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Antenna : Slide
 {
@@ -34,16 +36,28 @@ public class Antenna : Slide
 
         if(gameObject.transform.parent.transform.localScale.y == maxLength)
         {
-            if(bCol.myState == BoolCollection.State.Magneticwaves)
+            if(gameState.myState == StateHandler.State.Magneticwaves)
             {
-                tHandler.ProgressText(radioChapter.Appointment, radio, 0, protaginist);
-                bCol.myState = BoolCollection.State.RadioWorking;
+                tHandler.ProgressText(radioChapter.Appointment, radio, true, 0, protaginist);
+                gameState.myState = StateHandler.State.RadioWorking;
+                dialogue.ChangeTask("");
+                
+                tHandler.afterDialogue += () => {dialogue.EnableChoice(choice.ChoiceOne);};
+                //button event dings
+                dialogue.RemoveAddFunctions(0, tHandler, protChapter.Think, protaginist);
+                dialogue.RemoveAddFunctions(1, tHandler, protChapter.Void, protaginist);
+                
+                for(int i = 0; i < dialogue.buttons.Length; i++)
+                {
+                    dialogue.buttons[i].GetComponent<Button>().onClick.AddListener(() => {tHandler.afterDialogue += () => {dialogue.ChangeTask(quest.ChangeChannel);};});
+                }
+                
             } 
-            else if(bCol.myState == BoolCollection.State.BrokenRadio) 
+            else if(gameState.myState == StateHandler.State.BrokenRadio) 
             {
                 
-                tHandler.ProgressText(radioChapter.Static, radio, 0, protaginist);
-                bCol.myState = BoolCollection.State.Receive;
+                tHandler.ProgressText(radioChapter.Static, radio, true, 0, protaginist);
+                gameState.myState = StateHandler.State.Receive;
             }
 
         }

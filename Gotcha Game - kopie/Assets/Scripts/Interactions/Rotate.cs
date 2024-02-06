@@ -17,7 +17,7 @@ public class Rotate : ParentInteraction
 
     float offsetAngle;
     float offsetAngleTwo;
-    float theta_radians;
+    protected float theta_radians;
 
     protected override void OnMouseDown()
     {

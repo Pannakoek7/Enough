@@ -5,58 +5,60 @@ using TMPro;
 
 public class ParentInteraction : MonoBehaviour
 {
-    //Base mechanic
-    protected bool active;
-
-    protected virtual void OnMouseDown()
-    {
-        active = true;
-    }
-
-    protected virtual void OnMouseUp()
-    {
-        active = false;
-    }
-
     //Trigger events
     protected delegate void myDelegate();
 
     //get text components
     private GameObject hub;
-    protected ObjectiveHandler objHandler;
+    protected Dialogue dialogue;
     protected TextHandler tHandler;
-    protected MainCharacter mainChar;
-    protected RadioText rText;
     protected TMP_Text protaginist;
     protected TMP_Text radio;
-    protected RadioText.RadioMessages radioChapter;
-    protected MainCharacter.MainText protChapter;
-    protected ObjectiveHandler.Objectives quest;
+    protected TMP_Text wildlife;
+    protected Dialogue.RadioMessages radioChapter;
+    protected Dialogue.MainText protChapter;
+    protected Dialogue.CreatureText wildlifeChapter;
+    protected Dialogue.Objectives quest;
+    protected Dialogue.Choice choice;
 
     //get event component
-    protected BoolCollection bCol;
+    protected StateHandler gameState;
 
     protected virtual void Start()
     {
         hub = GameObject.Find("EmptySoEmpty");
         //get gamecomponents
-        objHandler = hub.GetComponent<ObjectiveHandler>();
+        dialogue = hub.GetComponent<Dialogue>();
         tHandler = hub.GetComponent<TextHandler>();
-        mainChar = hub.GetComponent<MainCharacter>();
-        rText = hub.GetComponent<RadioText>();
+        gameState = hub.GetComponent<StateHandler>();
 
         //rename textcomponents
-        protaginist = mainChar.mcText;
-        radio = rText.radioText;
+        protaginist = dialogue.mcText;
+        radio = dialogue.radioText;
+        wildlife = dialogue.wildlifeText;
 
         //rename chaptercomponents
-        radioChapter = rText.myRadio;
-        protChapter = mainChar.myText;
-        quest = objHandler.myObj;
+        radioChapter = dialogue.myRadio;
+        protChapter = dialogue.myText;
+        wildlifeChapter = dialogue.myWildlife;
+        quest = dialogue.myObj;
+        choice = dialogue.myChoice;
+    }
 
-        //test
-        bCol = hub.GetComponent<BoolCollection>();
+    //Base mechanic
+    protected bool active;
 
+    protected virtual void OnMouseDown()
+    {
+        if(tHandler.talking == false)
+        {
+            active = true;
+        }
+    }
+
+    protected virtual void OnMouseUp()
+    {
+        active = false;
     }
     
 }

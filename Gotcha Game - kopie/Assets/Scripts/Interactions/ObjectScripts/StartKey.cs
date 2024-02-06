@@ -9,7 +9,7 @@ public class StartKey : ParentInteraction
     protected override void Start()
     {
         base.Start();
-        StartKeyEvent += () => {objHandler.ChangeTask(quest.PushThrottle);};
+        StartKeyEvent += () => {dialogue.ChangeTask(quest.PushThrottle);};
         //lambda to pass parameter
         //Chapter first parameter, who says it second parameter
         StartKeyEvent += () => {tHandler.ProgressText(protChapter.Start, protaginist);};
@@ -17,15 +17,18 @@ public class StartKey : ParentInteraction
         {
             gameObject.GetComponent<SpriteRenderer>().color = Color.white;
             gameObject.transform.parent.transform.rotation = Quaternion.Euler(0,0,270);
-            bCol.myState = BoolCollection.State.Sail;
+            gameState.myState = StateHandler.State.Sail;
         };
+
+        //First message
+        tHandler.ProgressText(protChapter.Prologue, protaginist);
     }
 
     protected override void OnMouseDown()
     {
         base.OnMouseDown();
 
-        if(bCol.myState == BoolCollection.State.Start)
+        if(gameState.myState == StateHandler.State.Start)
         {
             StartKeyEvent?.Invoke();
             StartKeyEvent = null;

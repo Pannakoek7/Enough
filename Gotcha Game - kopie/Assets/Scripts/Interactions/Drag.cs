@@ -4,9 +4,10 @@ using Unity.VisualScripting;
 using UnityEngine;
 using System;
 
+
 public class Drag : ParentInteraction
 {
-    
+    //Dragging mechanic
     protected virtual void Update()
     {   
         if(active == true)
@@ -15,5 +16,4 @@ public class Drag : ParentInteraction
             gameObject.transform.position = newPosition;
         }
     }
-    
 }

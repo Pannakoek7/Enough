@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BoolCollection : MonoBehaviour
+public class StateHandler : MonoBehaviour
 {
     internal enum State
     {
@@ -11,7 +11,10 @@ public class BoolCollection : MonoBehaviour
         BrokenRadio,
         Receive,
         Magneticwaves,
-        RadioWorking
+        RadioWorking,
+        SpinningWheel,
+        Seagull,
+        Throwing
     }
 
     internal State myState = State.Start;
